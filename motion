@@ -1,0 +1,27 @@
+#!/bin/zsh
+# motion: the one entry point. Each step is a module (modules/<name>/); they talk through files in media/ and out/.
+#   ./motion voice <story> <part> [options]     script → narration   (stories/<story>/part<N>/script.txt → media/narration/<story>-p<N>/)
+#                                               options go to tts.py: --voice=… --lang=… --gap=… (default --gap=0.5)
+#   ./motion check <story> <part>               did the voice say the script? whisper small, Turkish; lists where to listen
+#   ./motion sfx [name ...]                     synthesise the sound library into media/sfx/ (all, or the named ones)
+#   ./motion still <story> <part> <frame>       one frame, to look at    → out/<story>-p<N>_<frame>.png
+#   ./motion preview <story> <part>             a quick quarter-size render → out/<story>-p<N>_preview.mp4
+#   ./motion render <story> <part> [<name>]     the real render          → out/<name or story-pN>.mp4
+#   ./motion studio                             Remotion's live preview in the browser
+# Setup once: see README.md (npm install in modules/video, a .venv here from modules/narration/requirements.txt).
+set -e
+ROOT="${0:A:h}"; cd "$ROOT"
+PY="$ROOT/.venv/bin/python"
+need_py() { [[ -x $PY ]] || { echo "no .venv: python3 -m venv .venv && .venv/bin/pip install -r modules/narration/requirements.txt"; exit 1; }; }
+id() { echo "$1-p$2"; }
+remotion() { (cd modules/video && npx remotion "$@"); }
+case "$1" in
+  voice)   need_py; "$PY" modules/narration/tts.py --name=$(id $2 $3) --file=stories/$2/part$3/script.txt --gap=0.5 "${@:4}" ;;
+  check)   need_py; "$PY" modules/narration/check.py --name=$(id $2 $3) ;;
+  sfx)     zsh modules/sound/sfx.sh "${@:2}" ;;
+  still)   remotion still $(id $2 $3) "$ROOT/out/$(id $2 $3)_$4.png" --frame=$4 --scale=0.5 --log=error && echo "out/$(id $2 $3)_$4.png" ;;
+  preview) remotion render $(id $2 $3) "$ROOT/out/$(id $2 $3)_preview.mp4" --scale=0.25 --log=error && echo "out/$(id $2 $3)_preview.mp4" ;;
+  render)  remotion render $(id $2 $3) "$ROOT/out/${4:-$(id $2 $3)}.mp4" --codec=h264 --crf=18 --log=error && echo "out/${4:-$(id $2 $3)}.mp4" ;;
+  studio)  remotion studio ;;
+  *)       sed -n '2,11p' "$0"; exit 1 ;;
+esac

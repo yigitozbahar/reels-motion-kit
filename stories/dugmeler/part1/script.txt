@@ -1,0 +1,6 @@
+Önünde iki düğme var. Biri kırmızı, biri mavi.
+Şu an on bin kişi daha aynı düğmelerin başında. Kimin neye bastığını kimse göremiyor.
+Kırmızıya basanlar yarıyı geçerse, maviye basan herkes ölüyor.
+Maviye basanlar yarıyı geçerse, kimse ölmüyor.
+Kırmızı seni kurtarır. Mavi herkesi kurtarır, tabii yeterince kişi basarsa.
+Peki sen hangisine basarsın? Cevap vermeden önce şunu bil:

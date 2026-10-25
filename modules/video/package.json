@@ -1,0 +1,25 @@
+{
+  "name": "claude-motion-video",
+  "private": true,
+  "description": "The video module: the drawn library (characters, sets, props, ui) and one Remotion composition per story part.",
+  "scripts": {
+    "studio": "remotion studio",
+    "typecheck": "tsc"
+  },
+  "dependencies": {
+    "@remotion/cli": "4.0.538",
+    "@remotion/google-fonts": "4.0.538",
+    "@remotion/media": "4.0.538",
+    "react": "19.2.3",
+    "react-dom": "19.2.3",
+    "remotion": "4.0.538"
+  },
+  "devDependencies": {
+    "@types/react": "19.2.7",
+    "@types/web": "0.0.166",
+    "typescript": "5.9.3"
+  },
+  "engines": {
+    "node": "^20.19.0 || ^22.13.0 || >=24"
+  }
+}

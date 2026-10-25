@@ -1,0 +1,19 @@
+# installs and machine-made files
+node_modules/
+.venv/
+.env
+.DS_Store
+*.log
+out/
+modules/narration/models/
+media/sfx/
+
+# your own stories stay on this machine: only the examples (apartman, dugmeler) are in the repo
+stories/*
+!stories/apartman/
+!stories/dugmeler/
+media/narration/*
+!media/narration/apartman-p1/
+!media/narration/dugmeler-p1/
+modules/video/src/stories/*
+!modules/video/src/stories/.gitkeep
