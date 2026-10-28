@@ -1,7 +1,7 @@
 // narration.ts: the voice made by the narration module (media/narration/<name>/narration.json), and cues read from its words.
 import { staticFile } from "remotion";
 
-export type Word = { w: string; t0: number; t1: number };
+export type Word = { w: string; t0: number; t1: number; v?: string };   // v: the voice, when a [voice …] line isn't the narrator's
 export type Narration = { audio: string; duration: number; lang?: string; words: Word[] };   // lang: the script's language (tr when missing)
 
 export const loadNarration = async (name: string): Promise<Narration> => (await fetch(staticFile(`narration/${name}/narration.json`))).json();

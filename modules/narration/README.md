@@ -5,7 +5,8 @@
 
 - Voice: any edge-tts voice, `tr-TR-EmelNeural` by default at its normal rate and pitch. `--lang` (default `tr`) is the
   script's language: it's saved in narration.json, and the check and the captions follow it. `--gap=0.5` cuts each silence between
-  words to 0.5 s without touching the voice. `[pause N]` in a script inserts N s of silence.
+  words to 0.5 s without touching the voice. `[pause N]` in a script inserts N s of silence. `[voice <an edge-tts voice>]…[/voice]` reads a character's line with
+  another voice; those words carry it as `v` in narration.json.
 - Multilingual voices (e.g. `de-DE-FlorianMultilingualNeural` reading Turkish) guess each sentence's language: keep
   sentences longer than two or three words, or a short one can come out in another accent. The check can't hear accents.
 - `check.py` (`./motion check <story> <N>`): transcribes the narration with whisper `small` (in the narration's language) and compares it word by

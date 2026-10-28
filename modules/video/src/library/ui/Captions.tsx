@@ -23,10 +23,11 @@ const paginate = (words: Word[], maxWords: number, hold: number): Page[] => {
   return pages;
 };
 
-export const Captions: React.FC<{ nar: Narration; t: number; y?: number; size?: number; maxWords?: number }> = ({ nar, t, y = 1440, size = 90, maxWords = 3 }) => {
+// off: time spans with no captions (an alert or a note fills the frame, and the narrator reads it out)
+export const Captions: React.FC<{ nar: Narration; t: number; y?: number; size?: number; maxWords?: number; off?: [number, number][] }> = ({ nar, t, y = 1440, size = 90, maxWords = 3, off = [] }) => {
   const pages = useMemo(() => paginate(nar.words, maxWords, .45), [nar, maxWords]);
   const p = pages.find((q) => t >= q.t0 - .06 && t < q.t1);
-  if (!p) return null;
+  if (!p || off.some(([a, b]) => t >= a && t < b)) return null;
   return (
     <AbsoluteFill style={{ pointerEvents: "none" }}>
       <div style={{ position: "absolute", left: 80, right: 140, top: y, transform: "translateY(-50%)", display: "flex", flexWrap: "wrap", justifyContent: "center", columnGap: size * .26, lineHeight: 1.08 }}>

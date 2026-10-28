@@ -7,6 +7,7 @@ node_modules/
 out/
 modules/narration/models/
 media/sfx/
+downloads/
 
 # your own stories stay on this machine: only the examples (apartman, dugmeler) are in the repo
 stories/*

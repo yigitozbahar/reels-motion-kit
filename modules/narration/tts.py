@@ -10,6 +10,8 @@
 # (default tr): it's saved with the narration, and the check and the captions follow it. Set it with multilingual voices
 # (a de-DE-…Multilingual voice can read Turkish: its name says nothing about the script).
 # [pause 3] anywhere in the text inserts 3 s of silence there (time to read something on screen).
+# [voice de-DE-FlorianMultilingualNeural]“…”[/voice] reads what's inside with that voice (a character's line), the rest
+# with --voice. Those words carry their voice in narration.json ({ w, t0, t1, v }), so a shot can cue on the speaker.
 # --gap=0.5 shortens every silence between words to at most 0.5 s (Emel leaves about 1 s after each sentence). The voice
 # itself isn't touched, and the word times move with the cuts. Pauses written as [pause N] are kept as they are.
 import argparse, asyncio, json, os, re, subprocess, sys, tempfile
@@ -26,6 +28,8 @@ ap.add_argument('--rate', default='+0%')
 ap.add_argument('--pitch', default='+0Hz')
 ap.add_argument('--gap', type=float)
 ap.add_argument('--lang', default='tr')
+ap.add_argument('--retries', type=int, default=3)   # a voice that often returns nothing (tr-TR-AhmetNeural) is asked again, up to this many times
+ap.add_argument('--split', action='store_true')     # one request per sentence: a flaky voice fails less on short text
 ap.add_argument('--out', default='media/narration')
 a = ap.parse_args()
 text = a.text if a.text else open(a.file, encoding='utf-8').read() if a.file else sys.exit('pass --text or --file')
@@ -49,9 +53,9 @@ def duration(path):
     return float(subprocess.run(['ffprobe', '-v', 'error', '-show_entries', 'format=duration', '-of', 'csv=p=0', path], capture_output=True, text=True, check=True).stdout)
 
 
-async def speak(text, path):
+async def speak(text, path, voice):
     said = []
-    c = edge_tts.Communicate(text, a.voice, rate=a.rate, pitch=a.pitch, boundary='WordBoundary')
+    c = edge_tts.Communicate(text, voice, rate=a.rate, pitch=a.pitch, boundary='WordBoundary')
     with open(path, 'wb') as f:
         async for ch in c.stream():
             if ch['type'] == 'audio': f.write(ch['data'])
@@ -78,19 +82,28 @@ def tighten(src, dst, said, keep, fixed):
 out = f'{a.out}/{a.name}'
 os.makedirs(out, exist_ok=True)
 mp3 = f'{out}/narration.mp3'
-parts = re.split(r'\[pause\s+([\d.]+)\]', text)   # text, seconds, text, seconds, ..., text
+parts = re.split(r'(\[pause\s+[\d.]+\]|\[voice\s+[^\]\s]+\]|\[/voice\])', text)   # text, tag, text, tag, ..., text
 spoken = ' '.join(p.strip() for p in parts[::2] if p.strip())
-said, at, pieces, fixed, tmp = [], 0.0, [], [], tempfile.mkdtemp()
+said, who, at, pieces, fixed, tmp = [], [], 0.0, [], [], tempfile.mkdtemp()
+voice = a.voice
 try:
     for i, p in enumerate(parts):
-        if i % 2:                                     # a pause
-            pieces.append(('silence', float(p))); fixed.append((at, at + float(p))); at += float(p); continue
+        if i % 2:                                     # a tag
+            if p.startswith('[pause'):
+                s = float(p[6:-1]); pieces.append(('silence', s)); fixed.append((at, at + s)); at += s
+            else: voice = p[7:-1].strip() if p.startswith('[voice') else a.voice
+            continue
         if not p.strip(): continue
-        seg = f'{tmp}/{i}.mp3'
-        said += [(w, round(t0 + at, 3), round(t1 + at, 3)) for w, t0, t1 in asyncio.run(speak(p.strip(), seg))]
-        pieces.append(('file', seg)); at += duration(seg)
+        for j, s in enumerate(re.split(r'(?<=[.!?…:;”])\s+', p.strip()) if a.split else [p.strip()]):
+            seg = f'{tmp}/{i}_{j}.mp3'
+            for n in range(a.retries + 1):
+                try: words = asyncio.run(speak(s, seg, voice)); break
+                except edge_tts.exceptions.NoAudioReceived:
+                    if n == a.retries: raise
+            said += [(w, round(t0 + at, 3), round(t1 + at, 3)) for w, t0, t1 in words]; who += [voice] * len(words)
+            pieces.append(('file', seg)); at += duration(seg)
 except edge_tts.exceptions.NoAudioReceived:
-    sys.exit(f'{a.voice} returned no audio: the voice may be down on Microsoft\'s side')
+    sys.exit(f'{voice} returned no audio: the voice may be down on Microsoft\'s side')
 inputs, chains = [], []
 for i, (kind, v) in enumerate(pieces):
     inputs += ['-f', 'lavfi', '-t', str(v), '-i', 'anullsrc=r=24000:cl=mono'] if kind == 'silence' else ['-i', v]
@@ -101,6 +114,7 @@ subprocess.run(['ffmpeg', '-loglevel', 'error', '-y', *inputs, '-filter_complex'
 if a.gap is not None: said = tighten(whole, mp3, said, a.gap, fixed)
 else: os.replace(whole, mp3)
 dur = duration(mp3)
-data = {'audio': f'narration/{a.name}/narration.mp3', 'duration': round(dur, 3), 'voice': a.voice, 'lang': a.lang, 'gap': a.gap, 'words': attach(spoken, said)}
+words = [{**w, 'v': v} if v != a.voice else w for w, v in zip(attach(spoken, said), who)]
+data = {'audio': f'narration/{a.name}/narration.mp3', 'duration': round(dur, 3), 'voice': a.voice, 'lang': a.lang, 'gap': a.gap, 'words': words}
 with open(f'{out}/narration.json', 'w', encoding='utf-8') as f: json.dump(data, f, ensure_ascii=False, indent=0)
 print(f'{mp3}  {dur:.2f} s, {len(said)} words{f", gaps ≤ {a.gap} s" if a.gap is not None else ""} → {out}/narration.json')
