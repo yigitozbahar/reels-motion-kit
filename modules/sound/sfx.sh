@@ -38,6 +38,29 @@ MAKE[lock-turn]="-f lavfi -i aevalsrc=(0.7*(random(0)*2-1)+0.5*sin(2*PI*2400*t))
                                             # two metal clicks and a clunk (0.9 s)
 MAKE[footsteps-stairs]="-f lavfi -i aevalsrc=(0.55*(random(0)*2-1)+0.8*sin(2*PI*75*t))*exp(-32*mod(t\,0.82))*(0.25+0.75*t/9):d=9:s=$R -af lowpass=f=1100,aecho=0.8:0.55:90|170:0.35|0.2,volume=1.4"
                                             # slow steps coming closer, in a stairwell echo (9 s)
+# weather
+MAKE[rain]="-f lavfi -i anoisesrc=c=pink:d=12:a=0.6:r=$R -af highpass=f=500,lowpass=f=8000,tremolo=f=0.4:d=0.25"
+                                            # steady rain on a window (12 s, loops)
+MAKE[thunder]="-f lavfi -i anoisesrc=c=brown:d=5:a=0.7:r=$R -af lowpass=f=260,volume=2.5*exp(-0.8*t)*min(1\,t*6)*(0.75+0.25*sin(2*PI*2.3*t)):eval=frame,aecho=0.8:0.6:280:0.4"
+                                            # a roll of thunder, near then fading (5 s)
+# engines and machines
+MAKE[engine-start]="-f lavfi -i aevalsrc=lt(t\,1.1)*0.28*sgn(sin(2*PI*(26+14*t)*t))*(0.6+0.4*sin(2*PI*11*t))+gte(t\,1.1)*min(1\,(t-1.1)*5)*(0.6*sin(2*PI*52*t)+0.4*(random(0)*2-1))*(exp(-16*mod(t\,0.11))+0.8*exp(-16*mod(t+0.045\,0.11))):d=3.5:s=$R -af lowpass=f=700,volume=1.5"
+                                            # a starter grinding, then a big twin catching and revving (3.5 s; it fires at 1.1 s)
+MAKE[engine-idle]="-f lavfi -i aevalsrc=(0.55*sin(2*PI*48*t)+0.35*(random(0)*2-1))*(exp(-22*mod(t\,0.17))+0.85*exp(-22*mod(t+0.07\,0.17))):d=8.5:s=$R -af lowpass=f=420,volume=1.8"
+                                            # a big twin idling, its uneven double beat (8.5 s, loops)
+MAKE[fob-beep]="-f lavfi -i aevalsrc=0.35*sin(2*PI*2700*t)*(lt(t\,0.07)+gte(t\,0.14)*lt(t\,0.21)):d=0.4:s=$R"
+                                            # a remote key's double beep (0.4 s)
+MAKE[relay]="-f lavfi -i aevalsrc=0.7*(random(0)*2-1)*exp(-70*t)+0.6*sin(2*PI*85*t)*exp(-16*t):d=0.7:s=$R -af lowpass=f=2200,aecho=0.8:0.55:70|160:0.35|0.2,volume=1.2"
+                                            # a heavy light switch or relay clunking in a big concrete space (0.7 s)
+MAKE[whisper]="-f lavfi -i anoisesrc=c=white:d=3:a=0.5:r=$R -af bandpass=f=2800:w=2400,volume=90*(0.5+0.5*sin(2*PI*4.6*t))*(0.4+0.6*sin(PI*t/3)):eval=frame,aecho=0.8:0.4:40:0.3"
+                                            # breathy, syllable-like hiss rising and falling: a whisper with no words (3 s)
+# the house
+MAKE[knock]="-f lavfi -i aevalsrc=(0.7*sin(2*PI*120*t)+0.5*(random(0)*2-1))*(exp(-38*t)+gte(t\,0.3)*exp(-38*(t-0.3))+gte(t\,0.6)*exp(-38*(t-0.6))):d=1.6:s=$R -af lowpass=f=1400,aecho=0.8:0.5:60|140:0.3|0.15,volume=1.4"
+                                            # three knocks on a wooden door (1.6 s; at 0, 0.3, 0.6 s)
+MAKE[bangle]="-f lavfi -i aevalsrc=lt(t\,0.7)*0.25*(random(0)*2-1)*(0.6+0.4*sin(2*PI*31*t))+gte(t\,0.7)*0.35*(sin(2*PI*2350*t)+0.6*sin(2*PI*3710*t)+0.4*sin(2*PI*5230*t))*exp(-6*(t-0.7)):d=2:s=$R -af highpass=f=900,volume=1.0"
+                                            # metal scraping across a floor, then a small ring as it stops (2 s; it rings at 0.7 s)
+MAKE[chairs]="-f lavfi -i anoisesrc=c=brown:d=1.6:a=0.6:r=$R -af bandpass=f=380:w=300,volume=1.8*(0.5+0.5*sin(2*PI*7*t))*sin(PI*t/1.6):eval=frame,aecho=0.8:0.5:50:0.3"
+                                            # a chair pushed back across a floor (1.6 s)
 
 names=(${@:-${(ok)MAKE}})
 for n in $names; do
