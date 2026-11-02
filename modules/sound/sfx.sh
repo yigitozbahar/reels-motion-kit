@@ -62,6 +62,21 @@ MAKE[bangle]="-f lavfi -i aevalsrc=lt(t\,0.7)*0.25*(random(0)*2-1)*(0.6+0.4*sin(
 MAKE[chairs]="-f lavfi -i anoisesrc=c=brown:d=1.6:a=0.6:r=$R -af bandpass=f=380:w=300,volume=1.8*(0.5+0.5*sin(2*PI*7*t))*sin(PI*t/1.6):eval=frame,aecho=0.8:0.5:50:0.3"
                                             # a chair pushed back across a floor (1.6 s)
 
+MAKE[lullaby]="-f lavfi -i aevalsrc=0.22*(gte(t\,0.0)*(sin(2*PI*392*(1-0.006*sin(2*PI*0.7*t))*(t-0.0))+0.35*sin(2*PI*784*(1-0.006*sin(2*PI*0.7*t))*(t-0.0)))*exp(-3.2*(t-0.0))+gte(t\,0.55)*(sin(2*PI*523.25*(1-0.006*sin(2*PI*0.7*t))*(t-0.55))+0.35*sin(2*PI*1046.5*(1-0.006*sin(2*PI*0.7*t))*(t-0.55)))*exp(-3.2*(t-0.55))+gte(t\,1.1)*(sin(2*PI*659.25*(1-0.006*sin(2*PI*0.7*t))*(t-1.1))+0.35*sin(2*PI*1318.5*(1-0.006*sin(2*PI*0.7*t))*(t-1.1)))*exp(-3.2*(t-1.1))+gte(t\,1.65)*(sin(2*PI*587.33*(1-0.006*sin(2*PI*0.7*t))*(t-1.65))+0.35*sin(2*PI*1174.66*(1-0.006*sin(2*PI*0.7*t))*(t-1.65)))*exp(-3.2*(t-1.65))+gte(t\,2.2)*(sin(2*PI*523.25*(1-0.006*sin(2*PI*0.7*t))*(t-2.2))+0.35*sin(2*PI*1046.5*(1-0.006*sin(2*PI*0.7*t))*(t-2.2)))*exp(-3.2*(t-2.2))+gte(t\,2.75)*(sin(2*PI*440*(1-0.006*sin(2*PI*0.7*t))*(t-2.75))+0.35*sin(2*PI*880*(1-0.006*sin(2*PI*0.7*t))*(t-2.75)))*exp(-3.2*(t-2.75))+gte(t\,3.3)*(sin(2*PI*392*(1-0.006*sin(2*PI*0.7*t))*(t-3.3))+0.35*sin(2*PI*784*(1-0.006*sin(2*PI*0.7*t))*(t-3.3)))*exp(-3.2*(t-3.3))):d=4.6:s=$R -af aecho=0.8:0.6:180|330:0.35|0.2,volume=1.2"
+                                            # a music box playing a slow seven-note lullaby, a little out of tune (4.6 s, loops)
+MAKE[door-slam]="-f lavfi -i aevalsrc=(0.9*sin(2*PI*58*t)+0.6*(random(0)*2-1)*exp(-30*t))*exp(-9*t):d=2:s=$R -af lowpass=f=1000,aecho=0.8:0.6:120|260:0.45|0.3,volume=1.6"
+                                            # a heavy door slammed shut in a stairwell, a boom and its echo (2 s)
+
+MAKE[laugh]="-f lavfi -i aevalsrc=(0.45*(random(0)*2-1)+0.7*sin(2*PI*(250+40*sin(2*PI*5*t))*t)+0.3*sin(2*PI*(500+80*sin(2*PI*5*t))*t))*pow(abs(sin(PI*t*4.2))\,3)*exp(-0.45*t)*min(1\,t*5):d=3.2:s=$R -af bandpass=f=900:w=1500,aecho=0.8:0.6:140|300:0.4|0.25,volume=1.8"
+                                            # a breathy old woman's laugh, heh-heh-heh, fading into an echo (3.2 s)
+MAKE[window-knock]="-f lavfi -i aevalsrc=(0.9*sin(2*PI*85*t)*exp(-22*t)+0.5*(random(0)*2-1)*exp(-45*t)+0.3*sin(2*PI*2200*t)*exp(-16*t))+gte(t\,0.38)*(0.9*sin(2*PI*85*(t-0.38))*exp(-22*(t-0.38))+0.5*(random(0)*2-1)*exp(-45*(t-0.38))+0.3*sin(2*PI*2200*(t-0.38))*exp(-16*(t-0.38))):d=1.3:s=$R -af lowpass=f=5000,volume=1.5"
+                                            # a palm slammed twice on a car window: a thud and the glass ringing (1.3 s; at 0 and 0.38 s)
+MAKE[riser]="-f lavfi -i aevalsrc=(0.35*sin(2*PI*(70*t+60*t*t))+0.2*sin(2*PI*(105*t+90*t*t))+0.25*(random(0)*2-1)*t/3)*pow(t/3\,1.6):d=3:s=$R -af lowpass=f=3000,aecho=0.8:0.5:90:0.3,volume=1.6"
+                                            # tension rising: two sweeping tones and a growing hiss, cut off at the top (3 s)
+MAKE[branch-snap]="-f lavfi -i aevalsrc=(0.9*(random(0)*2-1)*exp(-60*t)+0.5*sin(2*PI*180*t)*exp(-30*t))+gte(t\,0.05)*0.6*(random(0)*2-1)*exp(-80*(t-0.05)):d=1:s=$R -af highpass=f=300,lowpass=f=6000,aecho=0.8:0.5:120|260:0.35|0.2,volume=1.4"
+                                            # a dry branch snapping underfoot in a quiet wood, its echo (1 s)
+MAKE[crackle]="-f lavfi -i aevalsrc=0.7*(random(0)*2-1)*gt(sin(2*PI*9*t)+sin(2*PI*23.3*t)+0.8*sin(2*PI*4.1*t)\,1.2)*min(1\,t*2):d=2.5:s=$R -af highpass=f=900,lowpass=f=7000,volume=1.1"
+                                            # something brittle cracking apart, quick dry ticks thickening (2.5 s)
 names=(${@:-${(ok)MAKE}})
 for n in $names; do
   [[ -n ${MAKE[$n]} ]] || { echo "no sound named $n (have: ${(ok)MAKE})"; exit 1; }

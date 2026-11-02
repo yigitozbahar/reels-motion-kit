@@ -2,7 +2,7 @@
 // last word). The example lives in
 // src/examples/; your own stories go in src/stories/ (kept out of git) as <Story>P<N>.story.tsx files exporting \`story\`,
 // and are found automatically.
-import { Composition } from "remotion";
+import { Composition, Still } from "remotion";
 import { story as apartmanP1 } from "./examples/apartman/ApartmanP1";
 import { story as dugmelerP1 } from "./examples/dugmeler/DugmelerP1";
 import { loadNarration } from "./lib/narration";
@@ -14,6 +14,8 @@ const PARTS: StoryPart[] = [apartmanP1, dugmelerP1, ...found.keys().map((k) => (
 
 export const RemotionRoot: React.FC = () => (
   <>
+    {PARTS.filter((p) => p.cover).map((p) => <Still key={`${p.id}-cover`} id={`${p.id}-cover`} component={p.cover!} width={1080} height={1920} />)}
+    {PARTS.map((p) => Object.keys(p.images ?? {}).map((name) => <Still key={`${p.id}-${name}`} id={`${p.id}-${name}`} component={p.images![name]} width={1080} height={1920} />))}
     {PARTS.map((p) => (
       <Composition
         key={p.id}

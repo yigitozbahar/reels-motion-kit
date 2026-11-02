@@ -43,3 +43,9 @@ export const Glow: React.FC<{ id: string; x: number; y: number; r: number; color
     <circle cx={x} cy={y} r={r} fill={`url(#${id})`} stroke="none" />   {/* no outline even inside an OUT group */}
   </>
 );
+
+// a depth layer for 2.5D moves: one camera move (x, y, zoom) seen by layers at different depths. depth < 1 is farther
+// (it moves and zooms less), > 1 nearer; stack them far to near.
+export const Layer: React.FC<{ x: number; y: number; zoom: number; depth?: number; children: React.ReactNode }> = ({ x, y, zoom, depth = 1, children }) => (
+  <Cam x={W / 2 + (x - W / 2) * depth} y={H / 2 + (y - H / 2) * depth} zoom={1 + (zoom - 1) * depth}><World>{children}</World></Cam>
+);

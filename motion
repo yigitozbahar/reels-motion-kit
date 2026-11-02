@@ -7,6 +7,8 @@
 #   ./motion still <story> <part> <frame>       one frame, to look at    → out/<story>-p<N>_<frame>.png
 #   ./motion preview <story> <part>             a quick quarter-size render → out/<story>-p<N>_preview.mp4
 #   ./motion render <story> <part> [<name>]     the real render          → out/<name or story-pN>.mp4
+#   ./motion cover <story> <part>               the reel's cover, if the part has one → out/<story>-p<N>-cover.png
+#   ./motion image <story> <part> <name>        one of the part's other images (a teaser…) → out/<story>-p<N>-<name>.png
 #   ./motion studio                             Remotion's live preview in the browser
 # Setup once: see README.md (npm install in modules/video, a .venv here from modules/narration/requirements.txt).
 set -e
@@ -22,6 +24,8 @@ case "$1" in
   still)   remotion still $(id $2 $3) "$ROOT/out/$(id $2 $3)_$4.png" --frame=$4 --scale=0.5 --log=error && echo "out/$(id $2 $3)_$4.png" ;;
   preview) remotion render $(id $2 $3) "$ROOT/out/$(id $2 $3)_preview.mp4" --scale=0.25 --log=error && echo "out/$(id $2 $3)_preview.mp4" ;;
   render)  remotion render $(id $2 $3) "$ROOT/out/${4:-$(id $2 $3)}.mp4" --codec=h264 --crf=18 --log=error && echo "out/${4:-$(id $2 $3)}.mp4" ;;
+  cover)   remotion still $(id $2 $3)-cover "$ROOT/out/$(id $2 $3)-cover.png" --log=error && echo "out/$(id $2 $3)-cover.png" ;;
+  image)   remotion still $(id $2 $3)-$4 "$ROOT/out/$(id $2 $3)-$4.png" --log=error && echo "out/$(id $2 $3)-$4.png" ;;
   studio)  remotion studio ;;
-  *)       sed -n '2,11p' "$0"; exit 1 ;;
+  *)       sed -n '2,13p' "$0"; exit 1 ;;
 esac
