@@ -77,6 +77,17 @@ MAKE[branch-snap]="-f lavfi -i aevalsrc=(0.9*(random(0)*2-1)*exp(-60*t)+0.5*sin(
                                             # a dry branch snapping underfoot in a quiet wood, its echo (1 s)
 MAKE[crackle]="-f lavfi -i aevalsrc=0.7*(random(0)*2-1)*gt(sin(2*PI*9*t)+sin(2*PI*23.3*t)+0.8*sin(2*PI*4.1*t)\,1.2)*min(1\,t*2):d=2.5:s=$R -af highpass=f=900,lowpass=f=7000,volume=1.1"
                                             # something brittle cracking apart, quick dry ticks thickening (2.5 s)
+
+MAKE[pad]="-f lavfi -i aevalsrc=0.16*sin(2*PI*110*t)+0.12*sin(2*PI*165*t)+0.1*sin(2*PI*220*t)*(0.7+0.3*sin(2*PI*0.1*t))+0.07*sin(2*PI*277*t)*(0.6+0.4*sin(2*PI*0.05*t))+0.05*sin(2*PI*330*t)*(0.5+0.5*sin(2*PI*0.15*t)):d=20:s=$R"
+                                            # a warm, wondering synth chord, slowly breathing, for explainers (20 s, loops seamlessly)
+MAKE[pop]="-f lavfi -i aevalsrc=0.8*sin(2*PI*(300*t+900*t*t))*exp(-22*t):d=0.25:s=$R"
+                                            # a soft round pop as something appears (0.25 s)
+MAKE[whoosh]="-f lavfi -i anoisesrc=c=pink:d=0.7:a=0.7:r=$R -af bandpass=f=1400:w=1800,volume=1.4*pow(sin(PI*t/0.7)\,2):eval=frame"
+                                            # air rushing past on a move to the next shot (0.7 s)
+MAKE[shimmer]="-f lavfi -i aevalsrc=0.16*(sin(2*PI*1760*t)+sin(2*PI*2217*t)+sin(2*PI*2637*t)+sin(2*PI*3520*t))*(0.6+0.4*sin(2*PI*9*t))*min(1\,t*6)*exp(-1.4*t):d=2.5:s=$R -af aecho=0.8:0.6:120|260:0.4|0.25"
+                                            # a bright glitter of high bells (2.5 s)
+MAKE[boom]="-f lavfi -i aevalsrc=(0.9*sin(2*PI*(46+40*exp(-6*t))*t)+0.7*(random(0)*2-1)*exp(-5*t))*exp(-1.1*t)*min(1\,t*200):d=4:s=$R -af lowpass=f=1800,volume=1.3"
+                                            # a huge distant explosion, a falling thump and its rumble (4 s)
 names=(${@:-${(ok)MAKE}})
 for n in $names; do
   [[ -n ${MAKE[$n]} ]] || { echo "no sound named $n (have: ${(ok)MAKE})"; exit 1; }

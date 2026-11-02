@@ -2,7 +2,8 @@
 
 Each story picks one drawing style and keeps it in every part. **The default for new stories is `lamplight`.** Every
 style shares the code rules in [../CLAUDE.md](../CLAUDE.md): flat 2D SVG drawn in code, the outline `OUT` from
-`style.ts` (#1A1420), red #E8453C as the one accent, Anton captions with the word being said in red.
+`style.ts` (#1A1420), red #E8453C as the one accent, Anton captions with the word being said in red. `glow-flat` is the
+exception: it has its own outline, accent and caption rules, below.
 
 ## lamplight (default)
 
@@ -36,6 +37,31 @@ The style of the two examples (apartman, dugmeler).
 - First-person POV throughout: the viewer's hands, their phone, their door. Characters appear through a peephole, on a
   screen or across a hallway, seldom in close-up.
 - Information on objects. A new shot every 3–5 s.
+
+## glow-flat
+
+For explainers, not horror: the bright look of science channels, saturated shapes glowing out of the dark. The pieces
+are in `library/ui/GlowKit.tsx`, the colours in `GLOW` in style.ts. Draw your own characters: take the visual language,
+never someone else's mascots.
+
+- **No outlines:** `OUT` isn't used. A shape is told from its neighbour by colour alone.
+- **Backdrop:** near-black and saturated, never neutral: indigo #080828 / #080848, violet #180828, or a red-black #280808
+  for heat. These were measured from reference frames, where they cover most of the picture.
+- **Light is the only soft thing:** one big radial glow behind the subject (`Sky`, `Glow`). Objects themselves are flat.
+- **Shading:** three hard-edged tones of one hue (`Ball`): a lighter patch toward the light, the base, and a shadow
+  shifted toward purple rather than toward black. Hot things are concentric wavy bands, pale at the core.
+- **Colour:** full saturation: magenta #F808B8, orange, yellow, cyan, electric blue, and white type. Keep a warm light on
+  a red-black: orange over a dark background goes brown.
+- **Density:** the look comes from many small things: flecks inside bands, dust, sparkles and dots filling the dark
+  (`Stars`). A big plain shape reads as clip art.
+- **Faces:** large white eyes, a black pupil with two highlights (`Eyes`), and a small flat mouth. Even a cell or an atom
+  gets eyes, which makes a dry fact feel alive.
+- **Type:** Montserrat ExtraBold, white, upper case: one big fact on screen at a time (`Title`), labels on objects
+  (`Tag`), flat block arrows pointing at what matters (`Arrow`). Keep element symbols as written (`raw`: Fe, not FE).
+- **Captions:** quiet: white sentence-case Montserrat, no outline, no red (`<Captions plain>`).
+- **Motion:** nothing stands still: things pop in past full size and settle (`pop`), bob, twinkle, and drift in depth
+  layers under a slow camera. Something new every 2–3 s. (Our own judgement, not measured from reference footage yet.)
+- **Sound:** a soft synth bed (`pad`) with small effects on every appearance (`pop`, `whoosh`, `shimmer`, `boom`).
 
 ## Adding a style
 
