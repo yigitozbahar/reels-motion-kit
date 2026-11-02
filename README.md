@@ -23,9 +23,9 @@ Two examples it makes (both in `examples/`, with sound):
 
 | path | what | tech |
 |---|---|---|
-| `motion` | the one entry point: `voice`, `check`, `sfx`, `still`, `preview`, `render`, `studio` | zsh |
+| `motion` | the one entry point: `voice`, `check`, `sfx`, `still`, `preview`, `render`, `cover`, `image`, `studio` | zsh |
 | `stories/<story>/part<N>/` | content: `script.txt` | text |
-| `modules/narration/` | script → voice + word times (`tts.py`); did the voice say the script (`check.py`) | Python: edge-tts, faster-whisper |
+| `modules/narration/` | script → voice + word times (`tts.py`); did the voice say the script (`check.py`) | Python: edge-tts or ElevenLabs, faster-whisper |
 | `modules/sound/` | the sound library, synthesised (`sfx.sh`) | ffmpeg |
 | `modules/video/` | the drawn library (`src/library`), the example (`src/examples`), your stories (`src/stories`) | TypeScript, Remotion 4 |
 | `media/` | what the modules hand each other (narration, sounds): Remotion's public dir | files |
@@ -43,6 +43,7 @@ Edge TTS service, and the fonts from Google Fonts at render time.
 ```
 cd modules/video && npm install && cd ../..
 python3 -m venv .venv && .venv/bin/pip install -r modules/narration/requirements.txt
+echo "ELEVENLABS_API_KEY=…" > .env  # only for ElevenLabs voices (edge-tts needs no key)
 ./motion sfx                       # the sound library → media/sfx/
 ./motion render apartman 1         # the example → out/apartman-p1.mp4 (Remotion downloads its Chrome on the first render)
 ```

@@ -21,7 +21,8 @@ second: 110–140 words fill a 60–85 s part.
 ## Series mechanics
 
 - Parts 2+ open on the winning option: on screen "you chose A" plus the option's text, spoken "most of you chose A".
-  Never percentages or vote counts.
+  When the vote was close, show the percentages instead (A 45% · B 55%) and say so: "Oylar çok yakındı. Ama kazanan
+  B." Never raw vote counts.
 - Each part **reveals one secret and adds one new threat**.
 - Write the options so both feel defensible. Lopsided options kill the comments.
 - The final part says it's the final part and which option won. It explains the opening mystery, and its last image
@@ -38,10 +39,10 @@ second: 110–140 words fill a 60–85 s part.
    ("who wrote this, and why would they say it?").
 5. Close in the last 12–18 s: read the options → the card → "Yorumlara A ya da B yaz" → "takipte kal". The card stays
    up until the end.
-6. Parts 2+ open with "Çoğunuz A'yı seçti" plus the option's text.
+6. Parts 2+ open with "Çoğunuz A'yı seçti" plus the option's text, or with the percentages when the vote was close.
 7. The final part pays off part 1's hook and ends on a "SON" card.
 8. 60–85 s per part.
 9. Captions: Anton, upper case, centred, the current word in red. Information arrives on screen through objects
    (phones, notes, documents); dialogue in bubbles or chat messages.
-10. First-person POV: the viewer's hands, their phone, their door. A dark palette with one accent colour.
+10. The drawing style comes from [styles.md](styles.md) (`lamplight` by default): a dark palette with one accent colour.
 11. A persistent HUD (a clock, a counter) is optional: a style decision per concept.

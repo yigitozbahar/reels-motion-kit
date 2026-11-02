@@ -9,7 +9,8 @@ Story Reels in any language, made in code: a script is voiced, the voice's word 
 1. Write `stories/<story>/part<N>/script.txt` in the story's language (ours: Turkish, second person, present tense), following
    [concept/format-guide.md](concept/format-guide.md) (a ≤5 s hook, a rule, a new beat every 3–5 s, two contradicting
    sources, the A/B close). 110–140 words is 60–85 s.
-2. `./motion voice <story> <N>` (another language or voice: add `--lang=en --voice=<an edge-tts voice>`), then **always**
+2. `./motion voice <story> <N>` (another language or voice: add `--lang=en --voice=<an edge-tts or ElevenLabs voice>`,
+   see [modules/narration/README.md](modules/narration/README.md)), then **always**
    `./motion check <story> <N>`. Claude can't hear audio: the check is the only way to catch a misread word. Show its findings raw and ask the user to listen there. Fixing a misread
    means rephrasing or changing punctuation in the script ("al." read as "alele", fixed by "al;"), then voicing again.
 3. Write the part as `modules/video/src/stories/<story>/<Story>P<N>.story.tsx`, exporting
@@ -30,8 +31,8 @@ its last frame must match its first (compare `./motion still <story> <N> 0` with
   `ui/`, `style.ts`): extend them with props, and add new generic pieces there. Story-specific characters live with
   their story. A character drawn once should serve every story it's in.
 - **Every shot is a pure function of t:** frames render in parallel and out of order.
-- **The look:** flat 2D SVG, the outline `OUT` from style.ts (#1A1420), a dark palette, red #E8453C as the one accent,
-  first-person POV, information on objects. A new shot every 3–5 s.
+- **The look:** flat 2D SVG, the outline `OUT` from style.ts (#1A1420), red #E8453C as the one accent. Each story picks
+  a style from [concept/styles.md](concept/styles.md) (`lamplight` by default) and keeps it in every part.
 - Draw only original characters and places.
 - `key` is a reserved React prop: don't name a prop `key`. Mind colours that vanish against each other.
 - Text goes through the browser: the fonts in style.ts load with latin-ext (ğ ş ı İ and most European letters). Upper-case
