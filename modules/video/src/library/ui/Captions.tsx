@@ -4,7 +4,7 @@
 import React, { useMemo } from "react";
 import { AbsoluteFill } from "remotion";
 import { Narration, Word } from "../../lib/narration";
-import { ANTON, CREAM, INK, RED } from "../style";
+import { ANTON, CREAM, GLOW, INK, MONTSERRAT, RED } from "../style";
 
 type Page = { words: (Word & { end: number })[]; t0: number; t1: number };
 
@@ -24,10 +24,18 @@ const paginate = (words: Word[], maxWords: number, hold: number): Page[] => {
 };
 
 // off: time spans with no captions (an alert or a note fills the frame, and the narrator reads it out)
-export const Captions: React.FC<{ nar: Narration; t: number; y?: number; size?: number; maxWords?: number; off?: [number, number][] }> = ({ nar, t, y = 1440, size = 90, maxWords = 3, off = [] }) => {
+// plain: quiet explainer captions: white sentence-case Montserrat, no outline, no red, no pop
+export const Captions: React.FC<{ nar: Narration; t: number; y?: number; size?: number; maxWords?: number; off?: [number, number][]; plain?: boolean }> = ({ nar, t, y = 1440, size = 90, maxWords = 3, off = [], plain = false }) => {
   const pages = useMemo(() => paginate(nar.words, maxWords, .45), [nar, maxWords]);
   const p = pages.find((q) => t >= q.t0 - .06 && t < q.t1);
   if (!p || off.some(([a, b]) => t >= a && t < b)) return null;
+  if (plain) return (
+    <AbsoluteFill style={{ pointerEvents: "none" }}>
+      <div style={{ position: "absolute", left: 90, right: 150, top: y, transform: "translateY(-50%)", textAlign: "center", fontFamily: MONTSERRAT, fontWeight: 700, fontSize: size, lineHeight: 1.2, color: GLOW.white, textShadow: "0 3px 18px rgba(8,8,40,.95), 0 0 6px rgba(8,8,40,.8)" }}>
+        {p.words.map((w) => <span key={w.t0} style={{ opacity: t >= w.t0 ? 1 : .4 }}>{w.w} </span>)}
+      </div>
+    </AbsoluteFill>
+  );
   return (
     <AbsoluteFill style={{ pointerEvents: "none" }}>
       <div style={{ position: "absolute", left: 80, right: 140, top: y, transform: "translateY(-50%)", display: "flex", flexWrap: "wrap", justifyContent: "center", columnGap: size * .26, lineHeight: 1.08 }}>

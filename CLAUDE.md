@@ -32,7 +32,8 @@ its last frame must match its first (compare `./motion still <story> <N> 0` with
   their story. A character drawn once should serve every story it's in.
 - **Every shot is a pure function of t:** frames render in parallel and out of order.
 - **The look:** flat 2D SVG, the outline `OUT` from style.ts (#1A1420), red #E8453C as the one accent. Each story picks
-  a style from [concept/styles.md](concept/styles.md) (`lamplight` by default) and keeps it in every part.
+  a style from [concept/styles.md](concept/styles.md) (`lamplight` by default) and keeps it in every part. `glow-flat`,
+  for explainers, has no outlines and its own colours.
 - Draw only original characters and places.
 - `key` is a reserved React prop: don't name a prop `key`. Mind colours that vanish against each other.
 - Text goes through the browser: the fonts in style.ts load with latin-ext (ğ ş ı İ and most European letters). Upper-case
