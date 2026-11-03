@@ -3,7 +3,7 @@
 Story Reels (vertical 1080×1920) in any language, made in code: a script is voiced, the voice's word times drive a
 drawn Remotion video. The concepts here (in Turkish): interactive horror stories that end on an A/B vote, and loop
 dilemmas.
-Two examples it makes (both in `examples/`, with sound):
+Three examples it makes (all in `examples/`, with sound):
 
 **Apartman** ([apartment-p1-tr.mp4](examples/apartment-p1-tr.mp4), 69 s): part 1 of an interactive horror story that ends on an A/B vote.
 
@@ -17,6 +17,13 @@ Two examples it makes (both in `examples/`, with sound):
 <p>
   <img src="docs/buttons-p1-tr.gif" width="230" alt="10 seconds of Düğmeler: 10,000 windows vote red or blue">
   <img src="docs/buttons-p1-tr-frames.jpg" width="560" alt="Ten frames from Düğmeler, from the two buttons to the hovering hand">
+</p>
+
+**Sen yıldız tozusun** ([stardust-p1-tr.mp4](examples/stardust-p1-tr.mp4), 69 s): an explainer in the `glow-flat` style, on where your atoms came from.
+
+<p>
+  <img src="docs/stardust-p1-tr.gif" width="230" alt="12 seconds of Sen yıldız tozusun: the star collapses, explodes and outshines a galaxy">
+  <img src="docs/stardust-p1-tr-frames.jpg" width="560" alt="Ten frames from Sen yıldız tozusun, from the atoms circling you to the stardust">
 </p>
 
 ## Layout

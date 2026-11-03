@@ -11,6 +11,7 @@ What the videos are and how they should be made. The code is in [../modules](../
 | [example-apartman.md](example-apartman.md) | Worked example 1 ("Apartman" part 1): the story, the shot list, what it taught |
 | [loop-dilemma.md](loop-dilemma.md) | Loop dilemmas: one dilemma in 20–30 s, the last sentence runs into the first |
 | [example-dugmeler.md](example-dugmeler.md) | Worked example 2 ("Düğmeler"): the red/blue buttons, a seamless loop |
+| [example-yildiz.md](example-yildiz.md) | Worked example 3 ("Sen yıldız tozusun"): an explainer in `glow-flat`, no story and no vote |
 | [rules-horror.md](rules-horror.md) | An idea for a second format, not started: "survive the rules" (Rule 1, Rule 2…, one night per part) |
 
 A new concept gets its own file here, and a row in this table.
