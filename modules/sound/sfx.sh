@@ -88,6 +88,12 @@ MAKE[shimmer]="-f lavfi -i aevalsrc=0.16*(sin(2*PI*1760*t)+sin(2*PI*2217*t)+sin(
                                             # a bright glitter of high bells (2.5 s)
 MAKE[boom]="-f lavfi -i aevalsrc=(0.9*sin(2*PI*(46+40*exp(-6*t))*t)+0.7*(random(0)*2-1)*exp(-5*t))*exp(-1.1*t)*min(1\,t*200):d=4:s=$R -af lowpass=f=1800,volume=1.3"
                                             # a huge distant explosion, a falling thump and its rumble (4 s)
+MAKE[bass-hit]="-f lavfi -i aevalsrc=(0.95*sin(2*PI*(55+80*exp(-30*t))*t)+0.45*sin(2*PI*110*t)*exp(-7*t)+0.25*(random(0)*2-1)*exp(-60*t))*exp(-3.6*t)*min(1\,t*300):d=1.2:s=$R -af lowpass=f=2500"
+                                            # one deep cinematic thump, a word hitting the screen; its 110 Hz carries on phones (1.2 s)
+MAKE[hand-bell]="-f lavfi -i aevalsrc=0.2*(gte(t\,0)*(sin(2*PI*1320*t)+0.6*sin(2*PI*2650*t)+0.35*sin(2*PI*3520*t))*exp(-5*t)+gte(t\,0.42)*(sin(2*PI*1320*(t-0.42))+0.6*sin(2*PI*2650*(t-0.42))+0.35*sin(2*PI*3520*(t-0.42)))*exp(-5*(t-0.42))+gte(t\,0.84)*(sin(2*PI*1320*(t-0.84))+0.6*sin(2*PI*2650*(t-0.84))+0.35*sin(2*PI*3520*(t-0.84)))*exp(-5*(t-0.84))):d=2.2:s=$R -af aecho=0.8:0.5:90:0.25"
+                                            # a small brass hand bell shaken three times behind a door (2.2 s)
+MAKE[tinnitus]="-f lavfi -i aevalsrc=0.22*sin(2*PI*5200*t)*(1-exp(-8*t))*exp(-0.8*t):d=2.5:s=$R"
+                                            # the thin ringing in your ears after a shock (2.5 s)
 names=(${@:-${(ok)MAKE}})
 for n in $names; do
   [[ -n ${MAKE[$n]} ]] || { echo "no sound named $n (have: ${(ok)MAKE})"; exit 1; }

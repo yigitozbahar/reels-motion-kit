@@ -46,6 +46,6 @@ its last frame must match its first (compare `./motion still <story> <N> 0` with
 
 Renders (`out/`), installs (`node_modules/`, `.venv/`), the whisper model, the generated `media/sfx/`, secrets
 (`.env`), and every story except the examples: `stories/`, `media/narration/` and `modules/video/src/stories/` are
-local-only, so a fresh clone holds the system plus the examples (apartman, dugmeler). The example videos in
+local-only, so a fresh clone holds the system plus the examples (apartman, dugmeler, yildiz). The example videos in
 `examples/` and their README previews in `docs/` are committed once; don't replace them on every change: each version stays in
 git's history for good.

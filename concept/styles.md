@@ -31,7 +31,7 @@ A dark house lit by one lamp. People are shown, not only the viewer's hands.
 
 ## flat-pov
 
-The style of the two examples (apartman, dugmeler).
+The style of the apartman and dugmeler examples.
 
 - Flat 2D, a dark palette, red #E8453C as the one accent.
 - First-person POV throughout: the viewer's hands, their phone, their door. Characters appear through a peephole, on a
@@ -40,8 +40,8 @@ The style of the two examples (apartman, dugmeler).
 
 ## glow-flat
 
-For explainers, not horror: the bright look of science channels, saturated shapes glowing out of the dark. The pieces
-are in `library/ui/GlowKit.tsx`, the colours in `GLOW` in style.ts. Draw your own characters: take the visual language,
+For explainers, not horror: the bright look of science channels, saturated shapes glowing out of the dark. Its worked
+example is [yildiz](example-yildiz.md). The pieces are in `library/ui/GlowKit.tsx`, the colours in `GLOW` in style.ts. Draw your own characters: take the visual language,
 never someone else's mascots.
 
 - **No outlines:** `OUT` isn't used. A shape is told from its neighbour by colour alone.

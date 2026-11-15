@@ -1,16 +1,17 @@
 // Root.tsx: every story part, registered as a composition that runs a second past its narration (a loop: right to its
-// last word). The example lives in
+// last word). The examples live in
 // src/examples/; your own stories go in src/stories/ (kept out of git) as <Story>P<N>.story.tsx files exporting \`story\`,
 // and are found automatically.
 import { Composition, Still } from "remotion";
 import { story as apartmanP1 } from "./examples/apartman/ApartmanP1";
 import { story as dugmelerP1 } from "./examples/dugmeler/DugmelerP1";
+import { story as yildizP1 } from "./examples/yildiz/YildizP1";
 import { loadNarration } from "./lib/narration";
 import { StoryPart } from "./lib/story";
 
 const FPS = 30;
 const found = require.context("./stories", true, /\.story\.tsx$/);
-const PARTS: StoryPart[] = [apartmanP1, dugmelerP1, ...found.keys().map((k) => (found(k) as { story: StoryPart }).story)];
+const PARTS: StoryPart[] = [apartmanP1, dugmelerP1, yildizP1, ...found.keys().map((k) => (found(k) as { story: StoryPart }).story)];
 
 export const RemotionRoot: React.FC = () => (
   <>
