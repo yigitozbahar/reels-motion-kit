@@ -1,5 +1,5 @@
 {
-  "name": "claude-motion-video",
+  "name": "reels-motion-video",
   "private": true,
   "description": "The video module: the drawn library (characters, sets, props, ui) and one Remotion composition per story part.",
   "scripts": {

@@ -1,7 +1,7 @@
 # Styles
 
 Each story picks one drawing style and keeps it in every part. **The default for new stories is `lamplight`.** Every
-style shares the code rules in [../CLAUDE.md](../CLAUDE.md): flat 2D SVG drawn in code, the outline `OUT` from
+style shares the code rules in [../AGENTS.md](../AGENTS.md): flat 2D SVG drawn in code, the outline `OUT` from
 `style.ts` (#1A1420), red #E8453C as the one accent, Anton captions with the word being said in red. `glow-flat` is the
 exception: it has its own outline, accent and caption rules, below.
 

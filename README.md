@@ -1,4 +1,4 @@
-# claude-motion-kit
+# reels-motion-kit
 
 Story Reels (vertical 1080×1920) in any language, made in code: a script is voiced, the voice's word times drive a
 drawn Remotion video. The concepts here (in Turkish): interactive horror stories that end on an A/B vote, and loop
@@ -37,7 +37,7 @@ Three examples it makes (all in `examples/`, with sound):
 | `modules/video/` | the drawn library (`src/library`), the example (`src/examples`), your stories (`src/stories`) | TypeScript, Remotion 4 |
 | `media/` | what the modules hand each other (narration, sounds): Remotion's public dir | files |
 | `concept/` | what the videos are: the concepts, the format guide, the example | Markdown |
-| `CLAUDE.md` | how to work on this repo | Markdown |
+| `AGENTS.md` | how a coding agent works on this repo (`CLAUDE.md` just points to it) | Markdown |
 | `examples/`, `docs/` | the example videos, and their previews and frames for this page | media |
 
 The modules only meet through files in `media/`; any one can change without the others knowing.
@@ -60,11 +60,21 @@ echo "ELEVENLABS_API_KEY=…" > .env  # only for ElevenLabs voices (edge-tts nee
 ```
 stories/<story>/part1/script.txt                          write it
 ./motion voice <story> 1 && ./motion check <story> 1      voice it, then check what the voice said
-modules/video/src/stories/<story>/<Story>P1.story.tsx     draw it (it registers itself; see CLAUDE.md)
+modules/video/src/stories/<story>/<Story>P1.story.tsx     draw it (it registers itself; see AGENTS.md)
 ./motion preview <story> 1 && ./motion render <story> 1   look, then render
 ```
 
 Your own stories stay on your machine (see .gitignore); only the example is in the repo.
 
-Remotion is free for individuals and companies of up to 3 people; its licence is in
-`modules/video/node_modules/remotion/LICENSE.md`.
+## With a coding agent
+
+The code makes no AI calls: the pipeline is TTS, whisper, ffmpeg and Remotion, and the examples render without any
+model. A coding agent does the creative part, writing the script and drawing the shots, by following
+[AGENTS.md](AGENTS.md). Codex and most other agents read `AGENTS.md` themselves, and Claude Code reads it through
+`CLAUDE.md`. For any other agent, point it to `AGENTS.md`. The agent needs to see images, because it checks its shots
+from rendered stills.
+
+## Licence
+
+MIT, see [LICENSE](LICENSE). Remotion has its own licence: it is free for individuals and companies of up to 3 people
+(`modules/video/node_modules/remotion/LICENSE.md`).
