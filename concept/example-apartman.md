@@ -34,7 +34,7 @@ her chat bubble → the floor: paper slides in past her feet's shadows → the r
 → the handwriting, "benim" underlined in red → the 4th ring → the lock turns by itself → split: A (the door opens on
 her grin) / B (your hand on the lock) → the "NE YAPARDIN?" card and footer.
 
-## What it taught (also in CLAUDE.md)
+## What it taught (also in AGENTS.md)
 
 - The first attempt, with every frame painted brush by brush, had 8 long shots and an unreadable opening. Cutting
   every 3–5 s and carrying information on objects (phones, notes) is what made it work.

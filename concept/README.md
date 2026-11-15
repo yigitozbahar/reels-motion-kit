@@ -1,7 +1,7 @@
 # Concepts
 
 What the videos are and how they should be made. The code is in [../modules](../modules); how to work on it is in
-[../CLAUDE.md](../CLAUDE.md).
+[../AGENTS.md](../AGENTS.md).
 
 | file | what it holds |
 |---|---|

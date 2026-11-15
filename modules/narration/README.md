@@ -23,7 +23,7 @@
   sentences longer than two or three words, or a short one can come out in another accent. The check can't hear accents.
 - `check.py` (`./motion check <story> <N>`): transcribes the narration with whisper `small` (in the narration's language) and compares it word by
   word with the script: misread, skipped or extra words, stretched words, sentence ends with no pause. Run it after every
-  `voice`: Claude can't hear audio. The model (~470 MB) downloads into `models/` on the first run (kept out of git). (Emel once read a sentence-final "al." as "alele"; "al;" fixed it.)
+  `voice`: an AI agent can't hear audio. The model (~470 MB) downloads into `models/` on the first run (kept out of git). (Emel once read a sentence-final "al." as "alele"; "al;" fixed it.)
 - `pause.py`: edits a narration without voicing it again (no TTS, no credits). It puts a silence after one word and can
   slow that word and the next one down and make them tremble: `--after="“Bu" --secs=0.6 --slow=1.3 --shake=0.3
   --as="“Bu…" --next-as="benim!”"`. The word times move with the edit, so captions and shots follow; re-render after it.

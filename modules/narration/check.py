@@ -1,4 +1,4 @@
-# check.py: did the voice say what the script says? Claude can't hear audio, so this is how a narration gets checked.
+# check.py: did the voice say what the script says? An AI agent can't hear audio, so this is how a narration gets checked.
 # Transcribes media/narration/<name>/narration.mp3 with faster-whisper (multilingual `small`, in the narration's language)
 # and compares it,
 # word by word, with the words tts.py asked for. Reports, with the time of each:
